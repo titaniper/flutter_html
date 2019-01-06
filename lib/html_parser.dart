@@ -107,9 +107,9 @@ class HtmlParser {
 
   Widget _parseNode(dom.Node node) {
     if (customRender != null) {
-      final Widget customWidget =
-          customRender(node, _parseNodeList(node.nodes));
+      final Widget customWidget = customRender(node, []);
       if (customWidget != null) {
+        _parseNodeList(node.nodes);
         return customWidget;
       }
     }
@@ -545,7 +545,7 @@ class HtmlParser {
           );
         case "p":
           return Padding(
-            padding: EdgeInsets.only(top: 14.0, bottom: 14.0),
+            padding: EdgeInsets.only(top: 3.0, bottom: 3.0),
             child: Container(
               width: width,
               child: Wrap(
