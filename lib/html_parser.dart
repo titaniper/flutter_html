@@ -748,6 +748,26 @@ class HtmlParser {
 
       String finalText = trimStringHtml(node.text);
       //Temp fix for https://github.com/flutter/flutter/issues/736
+      String regLink = r"(((http(s)?:\/\/)\S+(\.[^(\n|\t|\s,)]+)+)|((http(s)?:\/\/)?(([a-zA-z\-_]+[0-9]*)|([0-9]*[a-zA-z\-_]+)){2,}(\.[^(\n|\t|\s,)]+)+))+";
+      RegExp regExp = new RegExp(
+        regLink,
+        caseSensitive: false,
+        multiLine: false,
+      );
+
+      if (regExp.hasMatch(finalText)) {
+        return GestureDetector(
+            child: DefaultTextStyle.merge(
+              child: Text(finalText),
+              style: const TextStyle(
+                  decoration: TextDecoration.underline,
+                  color: Colors.blueAccent,
+                  decorationColor: Colors.blueAccent),
+            ),
+            onTap: () {
+              onLinkTap(finalText);
+            });
+      }
       if (finalText.endsWith(" ")) {
         return Container(
             padding: EdgeInsets.only(right: 2.0), child: Text(finalText));
